@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * Notice: This Sample Code is provided for the purpose of illustration only and is not intended to be used in a production environment.
+ * THIS SAMPLE CODE AND ANY RELATED INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
