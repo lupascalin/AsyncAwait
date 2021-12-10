@@ -31,7 +31,7 @@ namespace AP.HttpRequestsHttpClientFactoryConsole
                 {
                     services.AddHttpClient("PollyWaitAndRetry")
                             .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-                            //.AddPolicyHandler(GetRetryPolicy())
+                            .AddPolicyHandler(GetRetryPolicy())
                             ;
 
                     services.AddTransient<IGitHubService, GitHubService>();
@@ -132,6 +132,6 @@ namespace AP.HttpRequestsHttpClientFactoryConsole
     public class GitHubBranch
     {
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }        
 }

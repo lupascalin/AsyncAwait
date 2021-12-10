@@ -6,6 +6,7 @@
  */
 using AP.AsyncCookingBreakfast.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 /// <summary>
@@ -22,11 +23,11 @@ namespace AP.AsyncCookingBreakfast
         static async Task<int> Main(string[] args)
         {
             // Ex. 1
-            await CookingBreakfastV1();
+            //await CookingBreakfastV1();
 
             // Ex. 2
-            //var breakfastReady = await CookingBreakfastV2();
-            //Console.WriteLine($"Breakfast completed = {breakfastReady}");
+            var breakfastReady = await CookingBreakfastV2();
+            Console.WriteLine($"Breakfast completed = {breakfastReady}");
 
             Console.Read();
             return 0;
@@ -74,35 +75,43 @@ namespace AP.AsyncCookingBreakfast
 
             #region Option 1. Wait for all
 
-            await Task.WhenAll(eggsTask, baconTask, toastTask);
-            Console.WriteLine($"Eggs are ready at {DateTime.Now}");
-            Console.WriteLine($"Bacon is ready at {DateTime.Now}");
-            Console.WriteLine($"Toast is ready at {DateTime.Now}");
+            //await Task.WhenAll(eggsTask, baconTask, toastTask);
+            //Console.WriteLine($"Eggs are ready at {DateTime.Now}");
+            //Console.WriteLine($"Bacon is ready at {DateTime.Now}");
+            //Console.WriteLine($"Toast is ready at {DateTime.Now}");
 
             #endregion
 
             #region Option 2. Wait the first task to finish and then process its result
 
-            //var breakfastTasks = new List<Task> { eggsTask, baconTask, toastTask };
+            var breakfastTasks = new List<Task> { eggsTask, baconTask, toastTask };
 
-            //while (breakfastTasks.Count > 0)
-            //{
-            //    var finishedTask = await Task.WhenAny(breakfastTasks);
 
-            //    if (finishedTask == eggsTask)
-            //    {
-            //        Console.WriteLine($"Eggs are ready at {DateTime.Now}");
-            //    }
-            //    else if (finishedTask == baconTask)
-            //    {
-            //        Console.WriteLine($"Bacon is ready at {DateTime.Now}");
-            //    }
-            //    else if (finishedTask == toastTask)
-            //    {
-            //        Console.WriteLine($"Toast is ready at {DateTime.Now}");
-            //    }
-            //    breakfastTasks.Remove(finishedTask);
-            //}
+            while (breakfastTasks.Count > 0)
+            {
+                var finishedTask = await Task.WhenAny(breakfastTasks);
+
+                await finishedTask;
+                //if (finishedTask.IsFaulted)
+                //{
+                //    Console.WriteLine(finishedTask.Exception.ToString());
+                //    return false;
+                //}
+
+                if (finishedTask == eggsTask)
+                {
+                    Console.WriteLine($"Eggs are ready at {DateTime.Now}");
+                }
+                else if (finishedTask == baconTask)
+                {
+                    Console.WriteLine($"Bacon is ready at {DateTime.Now}");
+                }
+                else if (finishedTask == toastTask)
+                {
+                    Console.WriteLine($"Toast is ready at {DateTime.Now}");
+                }
+                breakfastTasks.Remove(finishedTask);
+            }
 
             #endregion
 
@@ -179,8 +188,8 @@ namespace AP.AsyncCookingBreakfast
             await Task.Delay(4000);
             
             // Ex. 1 Uncomment these lines for testing exception behavior
-            // Console.WriteLine("Fire! Toast is ruined!");
-            // throw new InvalidOperationException("The toaster is on fire");
+            Console.WriteLine("Fire! Toast is ruined!");
+            throw new InvalidOperationException("The toaster is on fire");
             
             await Task.Delay(1000);
             

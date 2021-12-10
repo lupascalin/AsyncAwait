@@ -196,17 +196,17 @@ namespace AP.TAPExamples
             }
         }
 
-        private static Task WriteFileToDisk(string filePath, string text)
+        private static async Task WriteFileToDisk(string filePath, string text)
         {
             Console.WriteLine($"- Writting File To Disk : {filePath}");
 
             if (filePath.Contains("13") || filePath.Contains("15") || filePath.Contains("17"))
             {
-                //await Task.Delay(2000);
-                //throw new Exception("Error-" + filePath);
+                await Task.Delay(2000);
+                throw new Exception("Error-" + filePath);
             }
 
-            return File.WriteAllTextAsync(filePath, text);
+            await File.WriteAllTextAsync(filePath, text);
         }
 
         static async Task ProcessMultipleWritesAsync()
@@ -411,7 +411,7 @@ namespace AP.TAPExamples
             var inputTasks = tasks.ToList();
 
             var sources = (from _ in Enumerable.Range(0, inputTasks.Count)
-                           select new TaskCompletionSource<T>())
+                           select new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously))
                            .ToList();
 
             int nextTaskIndex = -1;
