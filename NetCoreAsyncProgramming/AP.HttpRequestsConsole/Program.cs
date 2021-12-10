@@ -24,13 +24,13 @@ namespace AP.HttpRequestsConsole
             // Open Windows Terminal: netstat -a -p TCP -f 2
 
             // 1. Comment/Uncomment
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 100; i++)
             {
-                using (var client = new HttpClient())
-                {
-                    var result1 = await client.GetAsync(url1);
-                    Console.WriteLine($"{i} - request status code is {result1.StatusCode} for {result1.RequestMessage.RequestUri.Host} on thread {Thread.CurrentThread.ManagedThreadId}");
-                };
+                //using (var client = new HttpClient())
+                //{
+                //    var result1 = await client.GetAsync(url1);
+                //    Console.WriteLine($"{i} - request status code is {result1.StatusCode} for {result1.RequestMessage.RequestUri.Host} on thread {Thread.CurrentThread.ManagedThreadId}");
+                //};
 
                 var result2 = await Client.GetAsync(url2);
                 Console.WriteLine($"{i} - request status code is {result2.StatusCode} for {result2.RequestMessage.RequestUri.Host} on thread {Thread.CurrentThread.ManagedThreadId}");
